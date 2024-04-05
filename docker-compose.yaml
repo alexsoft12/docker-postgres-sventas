@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16.2
+    #restart: always -- cada vez inicia el docker se reinicia la base de datos
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: sventas
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+#  adminer:
+#    image: adminer
+    # restart: always
+#    ports:
+#      - 8080:8080
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@dominio.com
+      PGADMIN_DEFAULT_PASSWORD: password
+
+volumes:
+  pg-data: 
+    
+  ## docker-compose up // levantar los servicios
+  ## docker-compose up -d // levantar los servicios en segundo plano
+  ## docker-compose ps // ver los servicios
+  ## docker-compose stop // detener los servicios
+  ## docker-compose down // detener los servicios y eliminar los contenedores
+  ## docker-compose down -v // detener los servicios,  eliminar los contenedores y los volumenes
+  ## docker-compose logs -f // ver los logs de los servicios
+  ## docker-compose exec postgres psql -U admin -d sventas // conectarse a la base de datos
